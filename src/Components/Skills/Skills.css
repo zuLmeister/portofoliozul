@@ -1,0 +1,27 @@
+.skills-marquee {
+  overflow: hidden;
+  padding: 24px 0;
+  background: transparent;
+  white-space: nowrap;
+  position: relative;
+}
+
+.skills-marquee-content {
+  display: flex;
+  animation: marquee 30s linear infinite;
+}
+
+/* Pause animasi saat di-hover */
+.skills-marquee:hover .skills-marquee-content {
+  animation-play-state: paused;
+}
+
+/* Animasi bergerak */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

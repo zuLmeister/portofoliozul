@@ -1,0 +1,9 @@
+.slick-slide > div {
+  padding: 12px; /* jarak antar card */
+  box-sizing: border-box;
+}
+
+.slick-slider {
+  margin-left: -12px;
+  margin-right: -12px;
+}
