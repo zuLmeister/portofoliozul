@@ -79,7 +79,15 @@ const EducationAndOrg = ({ data, textColor, text }) => {
       <div id="education" style={{ paddingTop: "80px", paddingBottom: "48px" }}>
         <Divider>
           {/* Perbaikan: Menggunakan prop 'text' untuk judul */}
-          <Title level={3} style={{ color: textColor }}>
+          <Title
+            level={3}
+            style={{
+              color: textColor,
+              whiteSpace: "normal",
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+            }}
+          >
             {text.mainTitle}
           </Title>
         </Divider>
