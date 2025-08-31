@@ -78,11 +78,11 @@ const Navigation = ({
         onChange={(value) => onLanguageChange(value.toLowerCase())}
       />
       <Switch
-        checked={isDarkMode}
-        onChange={handleThemeToggle}
-        checkedChildren={<MoonOutlined />}
-        unCheckedChildren={<SunOutlined />}
-      />
+  checked={isDarkMode}
+  onChange={handleThemeToggle}
+  checkedChildren={<MoonOutlined style={{ color: "#fffff" }} />} 
+  unCheckedChildren={<SunOutlined style={{ color: "#fffff" }} />} 
+/>
     </Space>
   );
 

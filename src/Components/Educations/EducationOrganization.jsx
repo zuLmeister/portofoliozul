@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"; // <-- Perbaikan: Impor useState dan useRef
+import React, { useState, useRef } from "react";
 import {
   Row,
   Col,
@@ -19,6 +19,8 @@ import {
   LeftOutlined,
   RightOutlined,
 } from "@ant-design/icons";
+import { motion } from "framer-motion";
+import useIntersectionObserver from "../../hooks/UseIntersectionObserver";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -50,12 +52,41 @@ const navButtonStyle = {
   border: "none",
 };
 
-// Ganti nama prop `text` jika berbeda, atau gunakan nama ini agar konsisten
+// Animation variants
+const sectionVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
+const buttonVariants = {
+  hover: { scale: 1.1, transition: { duration: 0.3 } },
+  tap: { scale: 0.95 },
+};
+
+const modalVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: "easeOut" } },
+};
+
+const carouselItemVariants = {
+  hidden: { opacity: 0, x: 100 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
 const EducationAndOrg = ({ data, textColor, text }) => {
   const [filter, setFilter] = useState("all");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalImage, setModalImage] = useState("");
   const carouselRef = useRef(null);
+
+  // Use the intersection observer hook for both sections
+  const [educationRef, educationVisible] = useIntersectionObserver({ threshold: 0.1 });
+  const [certsRef, certsVisible] = useIntersectionObserver({ threshold: 0.1 });
 
   const filteredCerts = data.certifications.filter((cert) => {
     if (filter === "all") return true;
@@ -76,9 +107,15 @@ const EducationAndOrg = ({ data, textColor, text }) => {
   return (
     <>
       {/* BAGIAN PENDIDIKAN & ORGANISASI */}
-      <div id="education" style={{ paddingTop: "80px", paddingBottom: "48px" }}>
+      <motion.div
+        ref={educationRef}
+        variants={sectionVariants}
+        initial="hidden"
+        animate={educationVisible ? "visible" : "hidden"}
+        id="education"
+        style={{ paddingTop: "80px", paddingBottom: "48px" }}
+      >
         <Divider>
-          {/* Perbaikan: Menggunakan prop 'text' untuk judul */}
           <Title
             level={3}
             style={{
@@ -93,43 +130,79 @@ const EducationAndOrg = ({ data, textColor, text }) => {
         </Divider>
         <Row gutter={[16, 16]}>
           <Col xs={24} md={12}>
-            <Card title={text.educationCardTitle} style={{ height: "100%" }}>
-              <Title level={5}>{data.education.institution}</Title>
-              <Text strong>{data.education.degree}</Text>
-              <Paragraph type="secondary">
-                {data.education.period} | {text.gpaLabel}: {data.education.gpa}
-              </Paragraph>
-              <Paragraph>
-                <Text strong>{text.thesisLabel}:</Text> {data.education.thesis}
-              </Paragraph>
-              <Divider />
-              <Title level={5}>{data.training.institution}</Title>
-              <Paragraph strong>
-                {data.training.field} ({data.training.period})
-              </Paragraph>
-            </Card>
+            <motion.div
+              variants={cardVariants}
+              initial="hidden"
+              animate={educationVisible ? "visible" : "hidden"}
+              transition={{ delay: 0.2 }}
+            >
+              <Card
+                title={text.educationCardTitle}
+                style={{ height: "100%" }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Title level={5}>{data.education.institution}</Title>
+                <Text strong>{data.education.degree}</Text>
+                <Paragraph
+  type="secondary"
+  style={{
+    color: textColor, 
+  }}
+>
+  {data.education.period} | {text.gpaLabel}: {data.education.gpa}
+</Paragraph>
+
+                <Paragraph>
+                  <Text strong>{text.thesisLabel}:</Text> {data.education.thesis}
+                </Paragraph>
+                <Divider />
+                <Title level={5}>{data.training.institution}</Title>
+                <Paragraph strong>
+                  {data.training.field} ({data.training.period})
+                </Paragraph>
+              </Card>
+            </motion.div>
           </Col>
           <Col xs={24} md={12}>
-            <Card title={text.orgCardTitle} style={{ height: "100%" }}>
-              <Timeline
-                items={data.organizations.map((org, index) => ({
-                  key: index,
-                  children: `${org.role} (${org.period})`,
-                }))}
-              />
-              <Divider>{text.volunteerDivider}</Divider>
-              <Space direction="vertical">
-                {data.volunteering.map((v) => (
-                  <Text key={v.event}>{v.event}</Text>
-                ))}
-              </Space>
-            </Card>
+            <motion.div
+              variants={cardVariants}
+              initial="hidden"
+              animate={educationVisible ? "visible" : "hidden"}
+              transition={{ delay: 0.4 }}
+            >
+              <Card
+                title={text.orgCardTitle}
+                style={{ height: "100%" }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Timeline
+                  items={data.organizations.map((org, index) => ({
+                    key: index,
+                    children: `${org.role} (${org.period})`,
+                  }))}
+                />
+                <Divider>{text.volunteerDivider}</Divider>
+                <Space direction="vertical">
+                  {data.volunteering.map((v) => (
+                    <Text key={v.event}>{v.event}</Text>
+                  ))}
+                </Space>
+              </Card>
+            </motion.div>
           </Col>
         </Row>
-      </div>
+      </motion.div>
 
-      {/* BAGIAN SERTIFIKASI & PUBLIKASI (Implementasi Dinamis) */}
-      <div style={{ paddingTop: "48px", paddingBottom: "48px" }}>
+      {/* BAGIAN SERTIFIKASI & PUBLIKASI */}
+      <motion.div
+        ref={certsRef}
+        variants={sectionVariants}
+        initial="hidden"
+        animate={certsVisible ? "visible" : "hidden"}
+        style={{ paddingTop: "48px", paddingBottom: "48px" }}
+      >
         <Divider>
           <Title level={3} style={{ color: textColor }}>
             {text.certsCardTitle}
@@ -145,30 +218,29 @@ const EducationAndOrg = ({ data, textColor, text }) => {
             flexWrap: "wrap",
           }}
         >
-          <Button
-            onClick={() => setFilter("all")}
-            type={filter === "all" ? "primary" : "default"}
-          >
-            {text.filterAll}
-          </Button>
-          <Button
-            onClick={() => setFilter("certification")}
-            type={filter === "certification" ? "primary" : "default"}
-          >
-            {text.filterCertification}
-          </Button>
-          <Button
-            onClick={() => setFilter("copyright")}
-            type={filter === "copyright" ? "primary" : "default"}
-          >
-            {text.filterCopyright}
-          </Button>
-          <Button
-            onClick={() => setFilter("publication")}
-            type={filter === "publication" ? "primary" : "default"}
-          >
-            {text.filterPublication}
-          </Button>
+          {[
+            { label: text.filterAll, value: "all" },
+            { label: text.filterCertification, value: "certification" },
+            { label: text.filterCopyright, value: "copyright" },
+            { label: text.filterPublication, value: "publication" },
+          ].map((btn, index) => (
+            <motion.div
+              key={btn.value}
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
+              initial="hidden"
+              animate={certsVisible ? "visible" : "hidden"}
+              transition={{ delay: 0.1 * index }}
+            >
+              <Button
+                onClick={() => setFilter(btn.value)}
+                type={filter === btn.value ? "primary" : "default"}
+              >
+                {btn.label}
+              </Button>
+            </motion.div>
+          ))}
         </Space>
 
         {/* Wrapper untuk Carousel dan Tombol Navigasi */}
@@ -192,11 +264,13 @@ const EducationAndOrg = ({ data, textColor, text }) => {
                   );
                   cardContent = (
                     <>
-                      <img
+                      <motion.img
                         src={cert.image}
                         alt={cert.name}
                         style={imageStyle}
                         onClick={() => showModal(cert.image)}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
                       />
                       <Tag
                         color="purple"
@@ -207,7 +281,6 @@ const EducationAndOrg = ({ data, textColor, text }) => {
                     </>
                   );
                   break;
-
                 case "dicoding":
                   cardTitle = (
                     <>
@@ -217,11 +290,13 @@ const EducationAndOrg = ({ data, textColor, text }) => {
                   );
                   cardContent = (
                     <>
-                      <img
+                      <motion.img
                         src={cert.image}
                         alt={cert.name}
                         style={imageStyle}
                         onClick={() => showModal(cert.image)}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
                       />
                       <Tag
                         color="geekblue"
@@ -240,11 +315,13 @@ const EducationAndOrg = ({ data, textColor, text }) => {
                   );
                   cardContent = (
                     <>
-                      <img
+                      <motion.img
                         src={cert.image}
                         alt={text.huaweiTitle}
                         style={imageStyle}
                         onClick={() => showModal(cert.image)}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
                       />
                       <Text style={{ textAlign: "center" }}>{cert.text}</Text>
                     </>
@@ -265,50 +342,78 @@ const EducationAndOrg = ({ data, textColor, text }) => {
                         alignItems: "center",
                       }}
                     >
-                      <img
+                      <motion.img
                         src={cert.image}
                         alt={text.publicationTitle}
                         style={imageStyle}
                         onClick={() => showModal(cert.image)}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
                       />
                       <Paragraph
                         style={{ textAlign: "center", marginBottom: "8px" }}
                       >
                         "{cert.title}" ({cert.year})
                       </Paragraph>
-                      <Button
-                        type="primary"
-                        ghost
-                        onClick={() => window.open(cert.link, "_blank")}
-                      >
-                        Lihat Publikasi
-                      </Button>
+                      <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+                        <Button
+                          type="primary"
+                          ghost
+                          onClick={() => window.open(cert.link, "_blank")}
+                        >
+                          Lihat Publikasi
+                        </Button>
+                      </motion.div>
                     </div>
                   );
                   break;
+                default:
                   return null;
               }
               return (
                 <div key={`cert-${index}`}>
-                  <Card title={cardTitle}>
-                    <div style={carouselContentStyle}>{cardContent}</div>
-                  </Card>
+                  <motion.div
+                    variants={carouselItemVariants}
+                    initial="hidden"
+                    animate={certsVisible ? "visible" : "hidden"}
+                    transition={{ delay: 0.2 * index }}
+                  >
+                    <Card title={cardTitle}>
+                      <div style={carouselContentStyle}>{cardContent}</div>
+                    </Card>
+                  </motion.div>
                 </div>
               );
             })}
           </Carousel>
-          <Button
-            style={{ ...navButtonStyle, left: 0 }}
-            icon={<LeftOutlined />}
-            onClick={() => carouselRef.current.prev()}
-          />
-          <Button
-            style={{ ...navButtonStyle, right: 0 }}
-            icon={<RightOutlined />}
-            onClick={() => carouselRef.current.next()}
-          />
+          <motion.div
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+            initial="hidden"
+            animate={certsVisible ? "visible" : "hidden"}
+          >
+            <Button
+              style={{ ...navButtonStyle, left: 0 }}
+              icon={<LeftOutlined />}
+              onClick={() => carouselRef.current.prev()}
+            />
+          </motion.div>
+          <motion.div
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+            initial="hidden"
+            animate={certsVisible ? "visible" : "hidden"}
+          >
+            <Button
+              style={{ ...navButtonStyle, right: 0 }}
+              icon={<RightOutlined />}
+              onClick={() => carouselRef.current.next()}
+            />
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Modal untuk menampilkan gambar */}
       <Modal
@@ -317,11 +422,13 @@ const EducationAndOrg = ({ data, textColor, text }) => {
         footer={null}
         centered
       >
-        <img
-          alt="Sertifikat"
-          style={{ width: "100%", marginTop: "20px" }}
-          src={modalImage}
-        />
+        <motion.div variants={modalVariants} initial="hidden" animate="visible">
+          <img
+            alt="Sertifikat"
+            style={{ width: "100%", marginTop: "20px" }}
+            src={modalImage}
+          />
+        </motion.div>
       </Modal>
     </>
   );

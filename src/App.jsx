@@ -78,7 +78,7 @@ const App = () => {
             backgroundColor: currentTheme.token.colorBgContainer,
           }}
         >
-          {T.resume.name} ©{new Date().getFullYear()} - Created with React & Ant
+          {T.resume.name} ©{new Date().getFullYear()} - Created with Love helped by React & Ant
           Design
         </Footer>
       </Layout>

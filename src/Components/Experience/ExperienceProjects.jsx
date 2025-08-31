@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import {
-  Row,
-  Col,
   Typography,
   Card,
   Space,
@@ -12,38 +10,111 @@ import {
   Carousel,
 } from "antd";
 import { motion } from "framer-motion";
-
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import useIntersectionObserver from "../../hooks/UseIntersectionObserver";
+
 
 const { Title, Text } = Typography;
 
 const sliderSettings = {
   dots: true,
   infinite: true,
-  speed: 1000, // durasi transisi slide (1 detik)
+  speed: 1000,
   slidesToShow: 3,
   slidesToScroll: 1,
   autoplay: true,
-  autoplaySpeed: 5000, // waktu antar slide (5 detik)
+  autoplaySpeed: 5000,
   pauseOnHover: true,
   responsive: [
-    {
-      breakpoint: 992,
-      settings: {
-        slidesToShow: 2,
-      },
-    },
-    {
-      breakpoint: 768,
-      settings: {
-        slidesToShow: 1,
-      },
-    },
+    { breakpoint: 992, settings: { slidesToShow: 2 } },
+    { breakpoint: 768, settings: { slidesToShow: 1 } },
   ],
 };
 
+// --- Variasi animasi random ---
+const animationVariants = [
+  {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  },
+  {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
+  },
+  {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+  },
+  {
+    hidden: { opacity: 0, x: 50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+  },
+  {
+    hidden: { opacity: 0, rotate: -10 },
+    visible: { opacity: 1, rotate: 0, transition: { duration: 0.5 } },
+  },
+];
+
+// --- Subcomponent untuk 1 Project Card ---
+const ProjectCard = ({ project, index, handleCardClick }) => {
+  const [ref, isVisible] = useIntersectionObserver();
+  const variant = animationVariants[index % animationVariants.length];
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isVisible ? "visible" : "hidden"}
+      variants={variant}
+      whileHover={{ scale: 1.03 }}
+      style={{ height: "100%" }}
+    >
+      <Card
+        hoverable
+        onClick={() => handleCardClick(project)}
+        cover={
+          <img
+            alt={project.title}
+            src={project.images?.[0] || "/placeholder.png"}
+            style={{
+              height: 200,
+              width: "100%",
+              objectFit: "cover",
+            }}
+          />
+        }
+        style={{ width: "100%", height: "100%" }}
+        bodyStyle={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          height: "100%",
+        }}
+      >
+        <Card.Meta
+          title={project.title}
+          description={
+            <Typography.Paragraph ellipsis={{ rows: 3 }}>
+              {project.description}
+            </Typography.Paragraph>
+          }
+        />
+        <Divider style={{ margin: "12px 0" }} />
+        <Space size={[0, 8]} wrap>
+          {project.tags.map((tag) => (
+            <Tag key={tag} color="blue">
+              {tag}
+            </Tag>
+          ))}
+        </Space>
+      </Card>
+    </motion.div>
+  );
+};
+
+// --- Main Component ---
 const ExperienceAndProjects = ({ data, textColor, text }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
@@ -60,32 +131,19 @@ const ExperienceAndProjects = ({ data, textColor, text }) => {
 
   const allProjects = data.experience.flatMap((job) => job.projects || []);
 
-  // Motion animation variants
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.1,
-        duration: 0.4,
-        ease: "easeOut",
-      },
-    }),
-  };
-
   return (
     <div id="experience" style={{ paddingTop: "80px", paddingBottom: "48px" }}>
+      {/* Section Title */}
       <Divider>
         <Title level={3} style={{ color: textColor }}>
           {text.sectionTitle}
         </Title>
       </Divider>
 
+      {/* Job History */}
       <Title level={4} style={{ color: textColor, marginBottom: "24px" }}>
         {text.jobHistory}
       </Title>
-
       <Timeline mode="left">
         {data.experience.map((job, index) => (
           <Timeline.Item key={index}>
@@ -101,68 +159,26 @@ const ExperienceAndProjects = ({ data, textColor, text }) => {
         ))}
       </Timeline>
 
+      {/* Projects */}
       <Title
         level={4}
         style={{ color: textColor, marginTop: "48px", marginBottom: "24px" }}
       >
         {text.projectExamples}
       </Title>
-
       <Slider {...sliderSettings}>
         {allProjects.map((project, index) => (
           <div key={project.title}>
-            <motion.div
-              custom={index}
-              initial="hidden"
-              animate="visible"
-              variants={cardVariants}
-              whileHover={{ scale: 1.02 }}
-              style={{ height: "100%" }}
-            >
-              <Card
-                hoverable
-                onClick={() => handleCardClick(project)}
-                cover={
-                  <img
-                    alt={project.title}
-                    src={project.images?.[0] || "/placeholder.png"}
-                    style={{ height: 200, width: "100%", objectFit: "cover" }}
-                  />
-                }
-                style={{ width: "100%", height: "100%" }}
-                bodyStyle={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  height: "100%",
-                }}
-              >
-                <Card.Meta
-                  title={project.title}
-                  description={
-                    <Typography.Paragraph
-                      ellipsis={{ rows: 3, expandable: false }}
-                      style={{ marginBottom: 0 }}
-                    >
-                      {project.description}
-                    </Typography.Paragraph>
-                  }
-                />
-
-                <Divider style={{ margin: "12px 0" }} />
-                <Space size={[0, 8]} wrap>
-                  {project.tags.map((tag) => (
-                    <Tag key={tag} color="blue">
-                      {tag}
-                    </Tag>
-                  ))}
-                </Space>
-              </Card>
-            </motion.div>
+            <ProjectCard
+              project={project}
+              index={index}
+              handleCardClick={handleCardClick}
+            />
           </div>
         ))}
       </Slider>
 
+      {/* Modal Detail */}
       <Modal
         open={modalVisible}
         title={selectedProject?.title}
@@ -178,7 +194,6 @@ const ExperienceAndProjects = ({ data, textColor, text }) => {
             transition={{ duration: 0.3 }}
             style={{ marginTop: 8 }}
           >
-            {/* Carousel */}
             {selectedProject.images?.length > 0 && (
               <div style={{ marginBottom: 24 }}>
                 <Carousel autoplay dots>
@@ -199,8 +214,6 @@ const ExperienceAndProjects = ({ data, textColor, text }) => {
                 </Carousel>
               </div>
             )}
-
-            {/* Deskripsi & Tag */}
             <p>{selectedProject.description}</p>
             <Divider />
             <Space size={[0, 8]} wrap>

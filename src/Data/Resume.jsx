@@ -63,8 +63,14 @@ Always learning, always adapting, even when one button just won’t center or th
   ],
   experience: [
     {
+      company: "PT Bahana Cipta Internusa",
+      period: "Aug 2025 - Present",
+      title: "Full Stack Developer",
+     
+    },
+    {
       company: "Pertamina Hospital Balikpapan",
-      period: "Mar 2024 - Present",
+      period: "Mar 2024 - Jul 2025",
       title: "Full Stack Developer",
       projects: [
         {
@@ -263,8 +269,14 @@ Saya orang yang selalu penasaran, terus belajar, dan pantang nyerah, bahkan saat
   ],
   experience: [
     {
+      company: "PT Bahana Cipta Internusa",
+      period: "Aug 2025 - Now",
+      title: "Full Stack Developer",
+     
+    },
+    {
       company: "Rumah Sakit Pertamina Balikpapan",
-      period: "Mar 2024 - Sekarang",
+      period: "Mar 2024 - Jul 2025",
       title: "Full Stack Developer",
       projects: [
         {
