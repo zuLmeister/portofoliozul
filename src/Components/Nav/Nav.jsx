@@ -29,7 +29,6 @@ const Navigation = ({
     alignItems: "center",
     backgroundColor: theme.token.colorBgContainer,
     justifyContent: isMobile ? "space-between" : "flex-start",
-    backgroundColor: theme.token.colorBgContainer,
     borderBottom: `1px solid ${theme.token.colorBorder}`,
     padding: isMobile ? "0 16px" : "0 50px",
   };
@@ -78,11 +77,11 @@ const Navigation = ({
         onChange={(value) => onLanguageChange(value.toLowerCase())}
       />
       <Switch
-  checked={isDarkMode}
-  onChange={handleThemeToggle}
-  checkedChildren={<MoonOutlined style={{ color: "#fffff" }} />} 
-  unCheckedChildren={<SunOutlined style={{ color: "#fffff" }} />} 
-/>
+        checked={isDarkMode}
+        onChange={handleThemeToggle}
+        checkedChildren={<MoonOutlined style={{ color: "#fffff" }} />}
+        unCheckedChildren={<SunOutlined style={{ color: "#fffff" }} />}
+      />
     </Space>
   );
 
