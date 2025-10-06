@@ -70,7 +70,11 @@ const buttonVariants = {
 
 const modalVariants = {
   hidden: { opacity: 0, scale: 0.8 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
 };
 
 const carouselItemVariants = {
@@ -85,7 +89,9 @@ const EducationAndOrg = ({ data, textColor, text }) => {
   const carouselRef = useRef(null);
 
   // Use the intersection observer hook for both sections
-  const [educationRef, educationVisible] = useIntersectionObserver({ threshold: 0.1 });
+  const [educationRef, educationVisible] = useIntersectionObserver({
+    threshold: 0.1,
+  });
   const [certsRef, certsVisible] = useIntersectionObserver({ threshold: 0.1 });
 
   const filteredCerts = data.certifications.filter((cert) => {
@@ -145,16 +151,18 @@ const EducationAndOrg = ({ data, textColor, text }) => {
                 <Title level={5}>{data.education.institution}</Title>
                 <Text strong>{data.education.degree}</Text>
                 <Paragraph
-  type="secondary"
-  style={{
-    color: textColor, 
-  }}
->
-  {data.education.period} | {text.gpaLabel}: {data.education.gpa}
-</Paragraph>
+                  type="secondary"
+                  style={{
+                    color: textColor,
+                  }}
+                >
+                  {data.education.period} | {text.gpaLabel}:{" "}
+                  {data.education.gpa}
+                </Paragraph>
 
                 <Paragraph>
-                  <Text strong>{text.thesisLabel}:</Text> {data.education.thesis}
+                  <Text strong>{text.thesisLabel}:</Text>{" "}
+                  {data.education.thesis}
                 </Paragraph>
                 <Divider />
                 <Title level={5}>{data.training.institution}</Title>
@@ -355,7 +363,11 @@ const EducationAndOrg = ({ data, textColor, text }) => {
                       >
                         "{cert.title}" ({cert.year})
                       </Paragraph>
-                      <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+                      <motion.div
+                        variants={buttonVariants}
+                        whileHover="hover"
+                        whileTap="tap"
+                      >
                         <Button
                           type="primary"
                           ghost
@@ -387,29 +399,28 @@ const EducationAndOrg = ({ data, textColor, text }) => {
             })}
           </Carousel>
           <motion.div
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-            initial="hidden"
-            animate={certsVisible ? "visible" : "hidden"}
+            style={{ ...navButtonStyle, left: 0 }}
+            whileHover={{ opacity: 1, backgroundColor: "rgba(0,0,0,0.5)" }}
+            transition={{ duration: 0.2 }}
           >
             <Button
-              style={{ ...navButtonStyle, left: 0 }}
               icon={<LeftOutlined />}
+              type="text"
               onClick={() => carouselRef.current.prev()}
+              style={{ color: "white" }}
             />
           </motion.div>
+
           <motion.div
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-            initial="hidden"
-            animate={certsVisible ? "visible" : "hidden"}
+            style={{ ...navButtonStyle, right: 0 }}
+            whileHover={{ opacity: 1, backgroundColor: "rgba(0,0,0,0.5)" }}
+            transition={{ duration: 0.2 }}
           >
             <Button
-              style={{ ...navButtonStyle, right: 0 }}
               icon={<RightOutlined />}
+              type="text"
               onClick={() => carouselRef.current.next()}
+              style={{ color: "white" }}
             />
           </motion.div>
         </div>
