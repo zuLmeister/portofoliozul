@@ -79,7 +79,11 @@ const Hero = ({ data, textColor }) => {
     >
       <Row align="middle">
         {/* Kolom untuk Avatar dengan animasi */}
-        <Col xs={24} md={8} style={{ textAlign: "center", marginBottom: "24px" }}>
+        <Col
+          xs={24}
+          md={8}
+          style={{ textAlign: "center", marginBottom: "24px" }}
+        >
           <motion.div variants={avatarVariants}>
             <Avatar size={200} src={data.avatar || "/zulach.jpg"} />
           </motion.div>
@@ -103,7 +107,11 @@ const Hero = ({ data, textColor }) => {
               </Title>
               <Space>
                 {/* LinkedIn Icon */}
-                <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+                <motion.div
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
                   <Link
                     href={data.contact.linkedin}
                     target="_blank"
@@ -120,7 +128,11 @@ const Hero = ({ data, textColor }) => {
                   </Link>
                 </motion.div>
                 {/* CV Button */}
-                <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+                <motion.div
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
                   <Button
                     type="primary"
                     icon={<FileTextOutlined />}
@@ -134,11 +146,34 @@ const Hero = ({ data, textColor }) => {
             </motion.div>
 
             {/* Judul dan Ringkasan */}
-            <motion.div variants={titleVariants}>
-              <Title level={4} type="secondary" style={{ marginTop: "8px" }}>
+            {/* Judul dan Ringkasan */}
+            <motion.div
+              variants={titleVariants}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                flexWrap: "wrap",
+                marginTop: "8px",
+              }}
+            >
+              <Title level={4} type="secondary" style={{ margin: 0 }}>
                 {data.title}
               </Title>
+              {/* WakaTime Badge */}
+              <a
+                href="https://wakatime.com/@a976377c-adba-4a93-82de-585852f37e87"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="https://wakatime.com/badge/user/a976377c-adba-4a93-82de-585852f37e87.svg"
+                  alt="Total time coded since Aug 5 2025"
+                  style={{ height: "25px" }}
+                />
+              </a>
             </motion.div>
+
             {data.summary.split("\n\n").map((para, index) => (
               <motion.div
                 key={`para-${index}`}
