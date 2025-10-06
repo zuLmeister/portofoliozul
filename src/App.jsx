@@ -11,6 +11,7 @@ import ExperienceAndProjects from "./Components/Experience/ExperienceProjects.js
 import EducationOrganization from "./Components/Educations/EducationOrganization.jsx";
 import Contact from "./Components/Contacts/Contact.jsx";
 import { resumeGabungan } from "./Data/Resume.jsx";
+import Chatbot from "./Components/Chatbot/Chatbot.jsx";
 
 const { Content, Footer } = Layout;
 
@@ -51,9 +52,10 @@ const App = () => {
           }}
         >
           <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-            <Hero data={T.resume} textColor={textColor} />
-            <Skills data={T.resume.skills} textColor={textColor} />
+            <Hero id="hero" data={T.resume} textColor={textColor} />
+            <Skills id="skills" data={T.resume.skills} textColor={textColor} />
             <ExperienceAndProjects
+              id="experience"
               data={{
                 experience: T?.resume?.experience || [],
                 projects:
@@ -63,9 +65,8 @@ const App = () => {
               textColor={textColor}
               text={T?.experience_section || {}}
             />
-
-            {/* Panggil komponen baru dengan prop 'text' */}
             <EducationOrganization
+              id="education"
               data={T.resume}
               textColor={textColor}
               text={T.education_section || {}}
@@ -78,9 +79,11 @@ const App = () => {
             backgroundColor: currentTheme.token.colorBgContainer,
           }}
         >
-          {T.resume.name} ©{new Date().getFullYear()} - Created with Love helped by React & Ant
-          Design
+          {T.resume.name} ©{new Date().getFullYear()} - Created with Love helped
+          by React & Ant Design
         </Footer>
+
+        <Chatbot />
       </Layout>
     </ConfigProvider>
   );
