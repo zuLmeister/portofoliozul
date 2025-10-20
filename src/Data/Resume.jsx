@@ -24,7 +24,7 @@ const resumeInggris = {
   name: "ZULFIKAR AHMAD KOMARI",
   title: "Full Stack Developer",
   cv_link:
-    "https://drive.google.com/file/d/18FHOZcx48pJmNXUPVAIyUT7OvMwmbIRL/view?usp=sharing",
+    "https://drive.google.com/file/d/1GoI50T4B_6j7cVcAg_8FRN8aVRIDQX8G/view?usp=drive_link",
   cv_button_text: "View CV",
   contact: {
     phone: "+6282236601771",
@@ -231,7 +231,7 @@ const resumeIndonesia = {
   name: "ZULFIKAR AHMAD KOMARI",
   title: "Full Stack Developer",
   cv_link:
-    "https://drive.google.com/file/d/14IP0PLceofE39oyAUzTCl7JihOsWPh7W/view?usp=drive_link",
+    "https://drive.google.com/file/d/18FHOZcx48pJmNXUPVAIyUT7OvMwmbIRL/view?usp=drive_link",
   cv_button_text: "Lihat CV",
   contact: {
     phone: "+6282236601771",
