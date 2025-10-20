@@ -75,7 +75,7 @@ const Hero = ({ data, textColor }) => {
       initial="hidden"
       animate={heroVisible ? "visible" : "hidden"}
       id="home"
-      style={{ minHeight: "90vh", paddingTop: "48px", paddingBottom: "48px" }}
+      style={{ minHeight: "60vh", paddingTop: "48px", paddingBottom: "48px" }}
     >
       <Row align="middle">
         {/* Kolom untuk Avatar dengan animasi */}
