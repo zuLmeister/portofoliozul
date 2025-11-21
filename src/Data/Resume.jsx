@@ -66,7 +66,6 @@ Always learning, always adapting, even when one button just won’t center or th
       company: "PT Bahana Cipta Internusa",
       period: "Aug 2025 - Present",
       title: "Full Stack Developer",
-     
     },
     {
       company: "Pertamina Hospital Balikpapan",
@@ -101,10 +100,35 @@ Always learning, always adapting, even when one button just won’t center or th
           tags: ["CodeIgniter3", "Bootstrap", "Sybase"],
         },
         {
-          title: "General Affairs Application",
+          title: "General Affairs Application - User POV",
           description:
             "Designed and developed a General Affairs management system to help administrative staff coordinate room, driver, and vehicle bookings, while allowing users to make requests independently and efficiently.",
-          images: ["/general-affair.png"],
+          images: [
+            "/general-affair.png",
+            "/ga-user-1.png",
+            "/ga-user-2.png",
+            "/ga-user-3.png",
+            "/ga-user-4.png",
+            "/ga-user-5.png",
+          ],
+          tags: ["Laravel", "React + Vite", "Sybase", "Ant Design"],
+        },
+        {
+          title: "General Affairs Application - Admin POV",
+          description:
+            "Designed and developed a General Affairs management system to help administrative staff coordinate room, driver, and vehicle bookings, while allowing users to make requests independently and efficiently.",
+          images: [
+            "/general-affair.png",
+            "/ga-admin-1.png",
+            "/ga-admin-2.png",
+            "/ga-admin-3.png",
+            "/ga-admin-4.png",
+            "/ga-admin-5.png",
+            "/ga-admin-6.png",
+            "/ga-admin-7.png",
+            "/ga-admin-8.png",
+            "/ga-admin-9.png",
+          ],
           tags: ["Laravel", "React + Vite", "Sybase", "Ant Design"],
         },
         {
@@ -272,7 +296,6 @@ Saya orang yang selalu penasaran, terus belajar, dan pantang nyerah, bahkan saat
       company: "PT Bahana Cipta Internusa",
       period: "Aug 2025 - Now",
       title: "Full Stack Developer",
-     
     },
     {
       company: "Rumah Sakit Pertamina Balikpapan",
@@ -306,11 +329,37 @@ Saya orang yang selalu penasaran, terus belajar, dan pantang nyerah, bahkan saat
           images: ["/notulensi.png"],
           tags: ["CodeIgniter3", "Bootstrap", "Sybase"],
         },
+
         {
-          title: "General Affairs",
+          title: "General Affairs Application - User POV",
           description:
             "Merancang dan mengembangkan aplikasi General Affairs berbasis web untuk membantu admin dalam mengelola ruangan, supir, dan kendaraan, serta memudahkan user untuk melakukan pemesanan secara mandiri.",
-          images: ["/general-affair.png"],
+          images: [
+            "/general-affair.png",
+            "/ga-user-1.png",
+            "/ga-user-2.png",
+            "/ga-user-3.png",
+            "/ga-user-4.png",
+            "/ga-user-5.png",
+          ],
+          tags: ["Laravel", "React + Vite", "Sybase", "Ant Design"],
+        },
+        {
+          title: "General Affairs Application - Admim POV",
+          description:
+            "Merancang dan mengembangkan aplikasi General Affairs berbasis web untuk membantu admin dalam mengelola ruangan, supir, dan kendaraan, serta memudahkan user untuk melakukan pemesanan secara mandiri.",
+          images: [
+            "/general-affair.png",
+            "/ga-admin-1.png",
+            "/ga-admin-2.png",
+            "/ga-admin-3.png",
+            "/ga-admin-4.png",
+            "/ga-admin-5.png",
+            "/ga-admin-6.png",
+            "/ga-admin-7.png",
+            "/ga-admin-8.png",
+            "/ga-admin-9.png",
+          ],
           tags: ["Laravel", "React + Vite", "Sybase", "Ant Design"],
         },
         {
